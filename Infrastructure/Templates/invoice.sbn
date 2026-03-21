@@ -1,0 +1,22 @@
+<h1>Invoice</h1>
+
+<p><strong>Customer:</strong> {{ customer_name }}</p>
+
+<table border="1" cellspacing="0" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{ for item in items }}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+        </tr>
+    {{ end }}
+    </tbody>
+</table>
+
+<p><strong>Total:</strong> {{ total }}</p>
