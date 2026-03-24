@@ -4,7 +4,7 @@ namespace Domain.Models;
 
 public class InvoiceReport
 {
-    public string CustomerName { get; set; }
+    public string Name { get; set; }
     public List<Item> Items { get; set; }
     public decimal Total { get; set; }
 }

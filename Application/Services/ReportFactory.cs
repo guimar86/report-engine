@@ -12,5 +12,5 @@ public class ReportFactory
     }
 
     public IReportGenerator Get(string reportId)
-        => _generators.First(x => x.ReportId == reportId) ?? throw new KeyNotFoundException();
+        => _generators.First(x => x.ReportId.Equals(reportId, StringComparison.CurrentCultureIgnoreCase)) ?? throw new KeyNotFoundException();
 }
