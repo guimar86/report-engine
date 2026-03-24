@@ -2,14 +2,16 @@ using System.Text.Json;
 using Application.Configuration;
 using Application.Interfaces;
 using Application.Services;
+using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.Extensions.Options;
 
 namespace Application.Generators;
 
 public class InvoiceReportGenerator : IReportGenerator
 {
     private readonly TemplateService _template;
-    private readonly PdfService _pdf;
+    private readonly IPdfService _pdf;
     private readonly ReportSettings _reportSettings;
 
     /// <summary>
@@ -17,12 +19,12 @@ public class InvoiceReportGenerator : IReportGenerator
     /// </summary>
     /// <param name="template"></param>
     /// <param name="pdf"></param>
-    /// <param name="reportSetting"></param>
-    public InvoiceReportGenerator(TemplateService template, PdfService pdf, ReportSettings reportSettings)
+    /// <param name="reportSettings"></param>
+    public InvoiceReportGenerator(TemplateService template, IPdfService pdf, IOptions<ReportSettings> reportSettings)
     {
         _template = template;
         _pdf = pdf;
-        _reportSettings = reportSettings;
+        _reportSettings = reportSettings.Value;
     }
 
     public string ReportId => "invoice";
@@ -34,6 +36,6 @@ public class InvoiceReportGenerator : IReportGenerator
             _reportSettings.Settings[ReportId].Path,
             model);
 
-        return _pdf.Generate(html);
+        return await _pdf.Generate(html);
     }
 }
